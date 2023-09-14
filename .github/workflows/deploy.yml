@@ -21,10 +21,6 @@ permissions:
 jobs: 
   build-and-deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./infra/rg
     steps:
     - name: 'Az CLI login'
       uses: azure/login@v1
