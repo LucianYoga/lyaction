@@ -28,6 +28,10 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./infra/rg
 
     environment:
       name: ${{ github.event.inputs.environment }}
@@ -46,5 +50,4 @@ jobs:
     - name: Terraform Init
       id: init
       run: terraform init \
-          -backend-config=${{ inputs.environment }}-backend.tfvars
-      working-directory: ../env/${{ inputs.environment }}
+          -backend-config=../env/${{ inputs.environment }}/${{ inputs.environment }}-backend.tfvars
