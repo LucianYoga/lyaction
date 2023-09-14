@@ -22,3 +22,6 @@ jobs:
     - name: Deploy
       run: |
         echo "Deploying to ${{ github.event.inputs.environment }}"
+        echo "AZURE_CLIENT_ID is ${{ vars.AZURE_CLIENT_ID}}"
+        echo "AZURE_SUBSCRIPTION_ID is ${{ vars.AZURE_SUBSCRIPTION_ID }}"
+        echo "AZURE_TENANT_ID is ${{ vars.AZURE_TENANT_ID }}"
