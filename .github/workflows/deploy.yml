@@ -36,8 +36,6 @@ jobs:
     - name: 'Run Azure CLI commands'
       run: |
             az account show
-            az group list
-            pwd
   
     - name: Checkout code
       uses: actions/checkout@v3
