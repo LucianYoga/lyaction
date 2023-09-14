@@ -16,16 +16,6 @@ on:
       backend-key:
         type: string
         description: 'Name of the stage file inside the azure blob storage'
-#Special permissions required for OIDC authentication
-permissions:
-    id-token: write
-    contents: read
-
-#These environment variables are used by the terraform azure provider to setup OIDD authenticate. 
-env:
-    ARM_CLIENT_ID: "${{ vars.AZURE_CLIENT_ID }}"
-    ARM_SUBSCRIPTION_ID: "${{ vars.AZURE_SUBSCRIPTION_ID }}"
-    ARM_TENANT_ID: "${{ vars.AZURE_TENANT_ID }}"
 
 jobs:
   deploy:
@@ -50,3 +40,17 @@ jobs:
       run: terraform init \
           -backend-config=${{ inputs.environment }}-backend.tfvars
       working-directory: ../env/${{ inputs.environment }}
+
+    - name: Set default environment-name if empty
+      id: set_env_name
+      run: |
+            echo "::set-output name=env_name::${{ github.event.inputs.environment-name != '' && github.event.inputs.environment-name || 'xyz' }}"
+
+    - name: Deploy
+      run: |
+        echo "Deploying to ${{ github.event.inputs.environment }}"
+        echo "AZURE_CLIENT_ID is ${{ vars.AZURE_CLIENT_ID }}"
+        echo "AZURE_SUBSCRIPTION_ID is ${{ vars.AZURE_SUBSCRIPTION_ID }}"
+        echo "AZURE_TENANT_ID is ${{ vars.AZURE_TENANT_ID }}"
+        echo "environmet-name is : ${{ steps.set_env_name.outputs.env_name }}"
+        echo "backend-key is : ${{ github.event.inputs.backend-key }}"
