@@ -13,9 +13,7 @@ on:
       environment-name:
         type: string
         description: 'The environment name. It will be infered from the environment and brach if not specified'
-      backend-key:
-        type: string
-        description: 'Name of the stage file inside the azure blob storage'
+
 #Special permissions required for OIDC authentication
 permissions:
     id-token: write
