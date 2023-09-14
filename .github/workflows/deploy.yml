@@ -14,27 +14,13 @@ on:
         type: string
         description: 'The environment name. It will be infered from the environment and brach if not specified'
 
-#Special permissions required for OIDC authentication
 permissions:
-    id-token: write
-    contents: read
-
-    #These environment variables are used by the terraform azure provider to setup OIDD authenticate. 
-env:
-    ARM_CLIENT_ID: "${{ vars.AZURE_CLIENT_ID }}"
-    ARM_SUBSCRIPTION_ID: "${{ vars.AZURE_SUBSCRIPTION_ID }}"
-    ARM_TENANT_ID: "${{ vars.AZURE_TENANT_ID }}"
-jobs:
-  deploy:
+      id-token: write
+      contents: read
+      
+jobs: 
+  build-and-deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./infra/rg
-
-    environment:
-      name: ${{ github.event.inputs.environment }}
-    
     steps:
     - name: 'Az CLI login'
       uses: azure/login@v1
@@ -43,17 +29,8 @@ jobs:
           tenant-id: ${{ vars.AZURE_TENANT_ID }}
           subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
   
-
-    - name: Checkout code
-      uses: actions/checkout@v3
-    
-    # Setup Terraform with specified version on the runner
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-          terraform_version: 1.2.1
-
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: Terraform Init
-      id: init
-      run: terraform init -backend-config=../env/${{ inputs.environment }}/${{ inputs.environment }}-backend-rg.tfvars
+    - name: 'Run Azure CLI commands'
+      run: |
+          az account show
+          az group list
+          pwd
