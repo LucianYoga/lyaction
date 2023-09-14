@@ -27,12 +27,17 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+    
+    - name: Set default environment-name if empty
+      id: set_env_name
+      run: |
+            echo "::set-output name=env_name::${{ github.event.inputs.environment-name != '' && github.event.inputs.environment-name || 'xyz' }}"
 
     - name: Deploy
       run: |
         echo "Deploying to ${{ github.event.inputs.environment }}"
-        echo "AZURE_CLIENT_ID is ${{ vars.AZURE_CLIENT_ID}}"
+        echo "AZURE_CLIENT_ID is ${{ vars.AZURE_CLIENT_ID }}"
         echo "AZURE_SUBSCRIPTION_ID is ${{ vars.AZURE_SUBSCRIPTION_ID }}"
         echo "AZURE_TENANT_ID is ${{ vars.AZURE_TENANT_ID }}"
-        echo "environmet-name is : ${{ github.event.inputs.environment-name }}"
+        echo "environmet-name is : ${{ steps.set_env_name.outputs.env_name }}"
         echo "backend-key is : ${{ github.event.inputs.backend-key }}"
