@@ -3,6 +3,9 @@ name: Deploy
 on:
   workflow_dispatch:
     inputs:
+      pre:
+        type: boolean
+        default: true
       environment:
         description: 'Deployment environment'
         required: true
