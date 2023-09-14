@@ -10,6 +10,12 @@ on:
         description: 'Deployment environment'
         required: true
         default: 'eph'
+      environment-name:
+        type: string
+        description: 'The environment name. It will be infered from the environment and brach if not specified'
+      backend-key:
+        type: string
+        description: 'Name of the stage file inside the azure blob storage'
 
 jobs:
   deploy:
@@ -28,3 +34,5 @@ jobs:
         echo "AZURE_CLIENT_ID is ${{ vars.AZURE_CLIENT_ID}}"
         echo "AZURE_SUBSCRIPTION_ID is ${{ vars.AZURE_SUBSCRIPTION_ID }}"
         echo "AZURE_TENANT_ID is ${{ vars.AZURE_TENANT_ID }}"
+        echo "environmet-name is : ${{ github.event.inputs.environment-name }}"
+        echo "backend-key is : ${{ github.event.inputs.backend-key }}"
