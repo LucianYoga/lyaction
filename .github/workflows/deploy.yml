@@ -13,6 +13,11 @@ on:
       environment-name:
         type: string
         description: 'The environment name. It will be infered from the environment and brach if not specified'
+      region:
+        type: string
+        description: 'The environment region. It will be infered from the environment and brach if not specified'
+        required: true
+        default: 'centralus'
 
 permissions:
       id-token: write
@@ -52,6 +57,7 @@ jobs:
         terraform plan \
         -var-file=../env/${{ inputs.environment }}/${{ inputs.environment }}-rg.tfvars \
         -var="resource_group_name=rg-ccp-${{ inputs.environment }}-${{ inputs.environment-name }}" \
+        -var="location=r${{ inputs.region }}"
       working-directory: ./infra/rg
 
     # Generates an execution plan for Terraform
@@ -62,5 +68,6 @@ jobs:
         terraform apply \
         -var-file=../env/${{ inputs.environment }}/${{ inputs.environment }}-rg.tfvars \
         -var="resource_group_name=rg-ccp-${{ inputs.environment }}-${{ inputs.environment-name }}" \
+        -var="location=r${{ inputs.region }}"
         --auto-approve
       working-directory: ./infra/rg
