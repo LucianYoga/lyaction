@@ -51,7 +51,7 @@ jobs:
       run: |
         terraform plan \
         -var-file=../env/${{ inputs.environment }}/${{ inputs.environment }}-rg.tfvars \
-        -var="resource_group_name=rg-ccp-${{ inputs.environment-name }}-${{ inputs.environment }}" \
+        -var="resource_group_name=rg-ccp-${{ inputs.environment }}-${{ inputs.environment-name }}" \
       working-directory: ./infra/rg
 
     # Generates an execution plan for Terraform
@@ -61,6 +61,6 @@ jobs:
       run: |
         terraform apply \
         -var-file=../env/${{ inputs.environment }}/${{ inputs.environment }}-rg.tfvars \
-        -var="resource_group_name=rg-ccp-${{ inputs.environment-name }}-${{ inputs.environment }}" \
+        -var="resource_group_name=rg-ccp-${{ inputs.environment }}-${{ inputs.environment-name }}" \
         --auto-approve
       working-directory: ./infra/rg
