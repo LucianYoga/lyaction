@@ -48,6 +48,8 @@ jobs:
       run: terraform init -backend-config=../env/${{ inputs.environment }}/${{ inputs.environment }}-backend-rg.tfvars
       working-directory: ./infra/rg
 
+    - name: Set Environment Tag
+      run: echo "TF_VAR_Version=${{ github.head_ref }}" >> $GITHUB_ENV
 
     # Generates an execution plan for Terraform
     # An exit code of 0 indicated no changes, 1 a terraform failure, 2 there are pending changes.
@@ -57,6 +59,7 @@ jobs:
         terraform plan \
         -var-file=../env/${{ inputs.environment }}/${{ inputs.environment }}-rg.tfvars \
         -var="resource_group_name=rg-ccp-${{ inputs.environment }}-${{ inputs.environment-name }}" \
+        -var="tags={\"Version\":\"$TF_VAR_Version\"}" \
         -var="location=${{ inputs.region }}"
       working-directory: ./infra/rg
 
@@ -69,5 +72,6 @@ jobs:
         -var-file=../env/${{ inputs.environment }}/${{ inputs.environment }}-rg.tfvars \
         -var="resource_group_name=rg-ccp-${{ inputs.environment }}-${{ inputs.environment-name }}" \
         -var="location=${{ inputs.region }}" \
+        -var="tags={\"Version\":\"$TF_VAR_Version\"}" \
         --auto-approve
       working-directory: ./infra/rg
