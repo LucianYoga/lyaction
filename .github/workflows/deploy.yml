@@ -68,6 +68,6 @@ jobs:
         terraform apply \
         -var-file=../env/${{ inputs.environment }}/${{ inputs.environment }}-rg.tfvars \
         -var="resource_group_name=rg-ccp-${{ inputs.environment }}-${{ inputs.environment-name }}" \
-        -var="location=${{ inputs.region }}"
+        -var="location=${{ inputs.region }}" \
         --auto-approve
       working-directory: ./infra/rg
