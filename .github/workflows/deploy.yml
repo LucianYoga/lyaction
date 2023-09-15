@@ -70,6 +70,6 @@ jobs:
       id: apply
       run: |
         terraform apply \
-        -var-file=../env/${{ inputs.environment }}/${{ inputs.environment }}-rg.tfvars
+        -var-file=../env/${{ inputs.environment }}/${{ inputs.environment }}-rg.tfvars \
         --auto-approve
       working-directory: ./infra/rg
