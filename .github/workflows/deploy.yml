@@ -27,7 +27,7 @@ jobs:
 
   build-and-deploy:
     runs-on: ubuntu-latest
-    environment: eph
+    environment: ${{ inputs.environment }}
     #These environment variables are used by the terraform azure provider to setup OIDD authenticate. 
     env:
       ARM_CLIENT_ID: "${{ vars.AZURE_CLIENT_ID }}"
