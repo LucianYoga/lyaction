@@ -48,9 +48,6 @@ jobs:
       run: terraform init -backend-config=../env/${{ inputs.environment }}/${{ inputs.environment }}-backend-rg.tfvars
       working-directory: ./infra/rg
 
-    - name: Set Environment Tag
-      run: echo "TF_VAR_Version=${{ github.head_ref }}" >> $GITHUB_ENV
-
     - name: print-values-of-env-vars
       run: |
             echo "$GITHUB_JOB"
@@ -73,7 +70,7 @@ jobs:
         -var-file=../env/${{ inputs.environment }}/${{ inputs.environment }}-rg.tfvars \
         -var="resource_group_name=rg-ccp-${{ inputs.environment }}-${{ inputs.environment-name }}" \
         -var="location=${{ inputs.region }}" \
-        -var="tags={\"Askid\":\"AIDE_0078637\",\"DataClassification\":\"PCI\",\"Environment\":\"${{ inputs.environment }}-${{ inputs.environment-name }}\",\"Portfolio\":\"commpay-control-plane\",\"Owner\":\"lucian.yogarajah@optum.com;thomas.j.hauer@optum.com\",\"Suppport\":\"lucian.yogarajah@optum.com;thomas.j.hauer@optum.com\",\"Version\":\"$TF_VAR_Version\",\"Deployed_by\":\"$GITHUB_ACTOR\",\"Deployed_at\":\"${{ steps.get_time.outputs.time }}\"}"
+        -var="tags={\"Askid\":\"AIDE_0078637\",\"DataClassification\":\"PCI\",\"Environment\":\"${{ inputs.environment }}-${{ inputs.environment-name }}\",\"Portfolio\":\"commpay-control-plane\",\"Owner\":\"lucian.yogarajah@optum.com;thomas.j.hauer@optum.com\",\"Suppport\":\"lucian.yogarajah@optum.com;thomas.j.hauer@optum.com\",\"Version\":\"$GITHUB_REF_NAME-$GITHUB_EVENT_NAME-$GITHUB_RUN_NUMBER\",\"Deployed_by\":\"$GITHUB_ACTOR\",\"Deployed_at\":\"${{ steps.get_time.outputs.time }}\"}"
       working-directory: ./infra/rg
 
     # Generates an execution plan for Terraform
@@ -85,6 +82,6 @@ jobs:
         -var-file=../env/${{ inputs.environment }}/${{ inputs.environment }}-rg.tfvars \
         -var="resource_group_name=rg-ccp-${{ inputs.environment }}-${{ inputs.environment-name }}" \
         -var="location=${{ inputs.region }}" \
-        -var="tags={\"Askid\":\"AIDE_0078637\",\"DataClassification\":\"PCI\",\"Environment\":\"${{ inputs.environment }}-${{ inputs.environment-name }}\",\"Portfolio\":\"commpay-control-plane\",\"Owner\":\"lucian.yogarajah@optum.com;thomas.j.hauer@optum.com\",\"Suppport\":\"lucian.yogarajah@optum.com;thomas.j.hauer@optum.com\",\"Version\":\"$TF_VAR_Version\",\"Deployed_by\":\"$GITHUB_ACTOR\",\"Deployed_at\":\"${{ steps.get_time.outputs.time }}\"}" \
+        -var="tags={\"Askid\":\"AIDE_0078637\",\"DataClassification\":\"PCI\",\"Environment\":\"${{ inputs.environment }}-${{ inputs.environment-name }}\",\"Portfolio\":\"commpay-control-plane\",\"Owner\":\"lucian.yogarajah@optum.com;thomas.j.hauer@optum.com\",\"Suppport\":\"lucian.yogarajah@optum.com;thomas.j.hauer@optum.com\",\"Version\":\"$GITHUB_REF_NAME-$GITHUB_EVENT_NAME-$GITHUB_RUN_NUMBER\",\"Deployed_by\":\"$GITHUB_ACTOR\",\"Deployed_at\":\"${{ steps.get_time.outputs.time }}\"}" \
         --auto-approve
       working-directory: ./infra/rg
