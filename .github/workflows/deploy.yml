@@ -60,6 +60,10 @@ jobs:
             echo "$GITHUB_EVENT_NAME"
             echo "$GITHUB_REF_NAME"
 
+    - name: Get Current Time
+      id: get_time
+      run: echo "::set-output name=time::$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+
     # Generates an execution plan for Terraform
     # An exit code of 0 indicated no changes, 1 a terraform failure, 2 there are pending changes.
     - name: Terraform Plan
@@ -69,7 +73,7 @@ jobs:
         -var-file=../env/${{ inputs.environment }}/${{ inputs.environment }}-rg.tfvars \
         -var="resource_group_name=rg-ccp-${{ inputs.environment }}-${{ inputs.environment-name }}" \
         -var="location=${{ inputs.region }}" \
-        -var="tags={\"Askid\":\"AIDE_0078637\",\"DataClassification\":\"PCI\",\"Environment\":\"${{ inputs.environment }}-${{ inputs.environment-name }}\",\"Portfolio\":\"commpay-control-plane\",\"Owner\":\"lucian.yogarajah@optum.com;thomas.j.hauer@optum.com\",\"Suppport\":\"lucian.yogarajah@optum.com;thomas.j.hauer@optum.com\",\"Version\":\"$TF_VAR_Version\",\"Deployed_by\":\"$GITHUB_ACTOR\"}"
+        -var="tags={\"Askid\":\"AIDE_0078637\",\"DataClassification\":\"PCI\",\"Environment\":\"${{ inputs.environment }}-${{ inputs.environment-name }}\",\"Portfolio\":\"commpay-control-plane\",\"Owner\":\"lucian.yogarajah@optum.com;thomas.j.hauer@optum.com\",\"Suppport\":\"lucian.yogarajah@optum.com;thomas.j.hauer@optum.com\",\"Version\":\"$TF_VAR_Version\",\"Deployed_by\":\"$GITHUB_ACTOR\",\"Deployed_at\":\"${{ steps.get_time.outputs.time }}\"}"
       working-directory: ./infra/rg
 
     # Generates an execution plan for Terraform
@@ -81,6 +85,6 @@ jobs:
         -var-file=../env/${{ inputs.environment }}/${{ inputs.environment }}-rg.tfvars \
         -var="resource_group_name=rg-ccp-${{ inputs.environment }}-${{ inputs.environment-name }}" \
         -var="location=${{ inputs.region }}" \
-        -var="tags={\"Askid\":\"AIDE_0078637\",\"DataClassification\":\"PCI\",\"Environment\":\"${{ inputs.environment }}-${{ inputs.environment-name }}\",\"Portfolio\":\"commpay-control-plane\",\"Owner\":\"lucian.yogarajah@optum.com;thomas.j.hauer@optum.com\",\"Suppport\":\"lucian.yogarajah@optum.com;thomas.j.hauer@optum.com\",\"Version\":\"$TF_VAR_Version\",\"Deployed_by\":\"$GITHUB_ACTOR\"}" \
+        -var="tags={\"Askid\":\"AIDE_0078637\",\"DataClassification\":\"PCI\",\"Environment\":\"${{ inputs.environment }}-${{ inputs.environment-name }}\",\"Portfolio\":\"commpay-control-plane\",\"Owner\":\"lucian.yogarajah@optum.com;thomas.j.hauer@optum.com\",\"Suppport\":\"lucian.yogarajah@optum.com;thomas.j.hauer@optum.com\",\"Version\":\"$TF_VAR_Version\",\"Deployed_by\":\"$GITHUB_ACTOR\",\"Deployed_at\":\"${{ steps.get_time.outputs.time }}\"}" \
         --auto-approve
       working-directory: ./infra/rg
