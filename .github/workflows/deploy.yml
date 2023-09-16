@@ -32,7 +32,9 @@ jobs:
 
   build-and-deploy:
     runs-on: ubuntu-latest
-    environment: eph
+    environment: 
+      name: eph
+      url: https://github.com
 
     steps:
     - name: Checkout code
