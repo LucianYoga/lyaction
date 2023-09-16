@@ -53,17 +53,11 @@ jobs:
 
     - name: print-values-of-env-vars
       run: |
-            echo "$GITHUB_ACTION"
-            echo "$GITHUB_ENV"
-            echo "$GITHUB_API_URL"
             echo "$GITHUB_JOB"
-            echo "$GITHUB_PATH"
-            echo "$GITHUB_STEP_SUMMARY"
-            echo "$GITHUB_WORKFLOW"
             echo "$GITHUB_REPOSITORY_OWNER"
             echo "$GITHUB_RUN_NUMBER"
-            echo "$GITHUB_SERVER_URL"
-            echo "$RUNNER_NAME"
+            echo "$github.head_ref"
+            echo "$github.actor"
 
     # Generates an execution plan for Terraform
     # An exit code of 0 indicated no changes, 1 a terraform failure, 2 there are pending changes.
