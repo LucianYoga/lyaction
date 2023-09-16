@@ -29,8 +29,11 @@ env:
   ARM_TENANT_ID: "${{ vars.AZURE_TENANT_ID }}"
       
 jobs: 
+
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment: 
+      name: ${{ inputs.environment }}
 
     steps:
     - name: Checkout code
