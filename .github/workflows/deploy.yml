@@ -56,8 +56,13 @@ jobs:
             echo "$GITHUB_JOB"
             echo "$GITHUB_REPOSITORY_OWNER"
             echo "$GITHUB_RUN_NUMBER"
-            echo "$GITHUB.HEAD_REF"
-            echo "$GITHUB.ACTOR"
+            echo "$GITHUB_BASE_REF"
+            echo "$GITHUB_HEAD_REF"
+            echo "$GITHUB_ACTOR"
+            echo "$GITHUB_EVENT_NAME"
+            echo "$GITHUB_REF"
+            echo "$GITHUB_REF_NAME"
+            echo "$GITHUB_REF_TYPE"
 
     # Generates an execution plan for Terraform
     # An exit code of 0 indicated no changes, 1 a terraform failure, 2 there are pending changes.
