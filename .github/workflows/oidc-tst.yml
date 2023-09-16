@@ -9,7 +9,6 @@ permissions:
 jobs: 
   build-and-deploy:
     runs-on: ubuntu-latest
-    environment: eph
       
     steps:
     - name: 'Az CLI login'
