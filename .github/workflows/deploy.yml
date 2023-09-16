@@ -32,8 +32,7 @@ jobs:
 
   build-and-deploy:
     runs-on: ubuntu-latest
-    environment: 
-      name: ${{ inputs.environment }}
+
 
     steps:
     - name: Checkout code
