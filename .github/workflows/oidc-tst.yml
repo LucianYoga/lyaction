@@ -9,9 +9,7 @@ permissions:
 jobs: 
   build-and-deploy:
     runs-on: ubuntu-latest
-    environment: 
-        name: eph
-        url: https://github.com
+    environment: eph
 
     steps:
     - name: 'Az CLI login'
