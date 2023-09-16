@@ -32,7 +32,7 @@ jobs:
 
   build-and-deploy:
     runs-on: ubuntu-latest
-
+    environment: eph
 
     steps:
     - name: Checkout code
