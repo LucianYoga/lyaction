@@ -9,7 +9,10 @@ permissions:
 jobs: 
   build-and-deploy:
     runs-on: ubuntu-latest
-      
+    environment: 
+        name: eph
+        url: https://github.com
+
     steps:
     - name: 'Az CLI login'
       uses: azure/login@v1
