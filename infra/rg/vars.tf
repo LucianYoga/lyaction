@@ -16,6 +16,5 @@ variable "tags" {
     Portfolio           = "commpay-control-plane",
     Owner               = "lucian.yogarajah@optum.com;thomas.j.hauer@optum.com",
     Suppport            = "lucian.yogarajah@optum.com;thomas.j.hauer@optum.com" ,
-    Version             = TF_VAR_Version  
   }
 }
