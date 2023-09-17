@@ -54,25 +54,13 @@ jobs:
     - name: Terraform Init
       id: init
       run:  |
-        if [ ${{ inputs.environment }} == 'eph' && ${{ inputs.environment-name == ' '}} ]; then
+        if [ ${{ inputs.environment }} == 'eph' ]; then
             terraform init -backend-config=../env/${{ inputs.environment }}/${{ inputs.environment }}-backend-rg.tfvars \
             -backend-config=key=ccp-${{inputs.environment}}-nonprod-rg-v$GITHUB_RUN_NUMBER.tfstate
-        elif [ ${{ inputs.environment }} == 'eph' && ${{ inputs.environment-name != ' '}} ]; then
-            terraform init -backend-config=../env/${{ inputs.environment }}/${{ inputs.environment }}-backend-rg.tfvars \
-            -backend-config=key=ccp-${{inputs.environment}}-nonprod-rg-${{ inputs.environment-name}}.tfstate
         else 
           terraform init -backend-config=../env/${{ inputs.environment }}/${{ inputs.environment }}-backend-rg.tfvars 
         fi
       working-directory: ./infra/rg
-
-    - name: print-values-of-env-vars
-      run: |
-            echo "$GITHUB_JOB"
-            echo "$GITHUB_REPOSITORY_OWNER"
-            echo "$GITHUB_RUN_NUMBER"
-            echo "$GITHUB_ACTOR"
-            echo "$GITHUB_EVENT_NAME"
-            echo "$GITHUB_REF_NAME"
 
     - name: Get Current Time
       id: get_time
