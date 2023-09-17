@@ -48,7 +48,7 @@ jobs:
     - name: Terraform Init
       id: init
       run:  |
-        terraform init -backend-config=../env/${{ inputs.environment }}/${{ inputs.environment }}-backend-rg.tfvars
+        terraform init -backend-config=../env/${{ inputs.environment }}/${{ inputs.environment }}-backend-rg.tfvars \
         -backend-config=key=ccp-${{inputs.environment}}-nonprod-rg-v$GITHUB_RUN_NUMBER.tfstate
       working-directory: ./infra/rg
 
