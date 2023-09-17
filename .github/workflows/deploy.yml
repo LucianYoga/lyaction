@@ -8,6 +8,12 @@ on:
         default: true
       environment:
         description: 'Deployment environment'
+        type: choice
+        options:
+          - eph
+          - static
+          - perf
+          - prod
         required: true
         default: 'eph'
       environment-name:
@@ -46,10 +52,18 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      id: init
+      id: init-eph
       run:  |
+        if: ${{ inputs.environment == 'eph'}}
         terraform init -backend-config=../env/${{ inputs.environment }}/${{ inputs.environment }}-backend-rg.tfvars \
         -backend-config=key=ccp-${{inputs.environment}}-nonprod-rg-v$GITHUB_RUN_NUMBER.tfstate
+      working-directory: ./infra/rg
+
+    - name: Terraform Init
+      id: init-others
+      run:  |
+        if: ${{ inputs.environment != 'eph'}}
+        terraform init -backend-config=../env/${{ inputs.environment }}/${{ inputs.environment }}-backend-rg.tfvars
       working-directory: ./infra/rg
 
     - name: print-values-of-env-vars
