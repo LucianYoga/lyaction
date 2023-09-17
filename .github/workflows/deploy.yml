@@ -52,15 +52,14 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      id: init-eph
+      id: init
       run:  |
-        if [ ${{ inputs.environment }} == 'eph' ]; then
+        if [ ${{ inputs.environment }} == 'eph' && ${{ inputs.environment-name == ''}} ]; then
             terraform init -backend-config=../env/${{ inputs.environment }}/${{ inputs.environment }}-backend-rg.tfvars \
-            if [ ${{ inputs.environment-name == ''}}]
-              -backend-config=key=ccp-${{inputs.environment}}-nonprod-rg-v$GITHUB_RUN_NUMBER.tfstate
-            else
-              -backend-config=key=ccp-${{inputs.environment}}-nonprod-rg-${{ inputs.environment-name }}.tfstate
-            fi
+            -backend-config=key=ccp-${{inputs.environment}}-nonprod-rg-v$GITHUB_RUN_NUMBER.tfstate
+        elif [ ${{ inputs.environment }} == 'eph' && ${{ inputs.environment-name != ''}} ]; then
+            terraform init -backend-config=../env/${{ inputs.environment }}/${{ inputs.environment }}-backend-rg.tfvars \
+            -backend-config=key=ccp-${{inputs.environment}}-nonprod-rg-${{ inputs.environment-name}}.tfstate
         else 
           terraform init -backend-config=../env/${{ inputs.environment }}/${{ inputs.environment }}-backend-rg.tfvars 
         fi
