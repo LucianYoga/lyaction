@@ -56,7 +56,11 @@ jobs:
       run:  |
         if [ ${{ inputs.environment }} == 'eph' ]; then
             terraform init -backend-config=../env/${{ inputs.environment }}/${{ inputs.environment }}-backend-rg.tfvars \
-           -backend-config=key=ccp-${{inputs.environment}}-nonprod-rg-v$GITHUB_RUN_NUMBER.tfstate
+            if [ ${{ inputs.environment-name == ''}}]
+              -backend-config=key=ccp-${{inputs.environment}}-nonprod-rg-v$GITHUB_RUN_NUMBER.tfstate
+            else
+              -backend-config=key=ccp-${{inputs.environment}}-nonprod-rg-${{ inputs.environment-name }}.tfstate
+            fi
         else 
           terraform init -backend-config=../env/${{ inputs.environment }}/${{ inputs.environment }}-backend-rg.tfvars 
         fi
